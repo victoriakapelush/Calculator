@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    background-color: ghostwhite;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    height: 550px;
+    width: 450px;
+    border: 8px solid rgb(52, 50, 50);
+    margin: auto;
+    margin-top: 100px;
+}
+
+.container div {
+    border: 1px solid black;
+}
+
+.screen {
+    grid-column: 1/5;
+}
+
+.zero {
+    grid-column: 1/3;
+}
