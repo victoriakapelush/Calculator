@@ -12,10 +12,8 @@ let selectedOperator = null;
 numberButtons.forEach(element => {
   element.addEventListener('click', function () {
     if (selectedOperator === null) {
-      // If no operator is selected, update the first operand
       firstOperand += element.textContent;
     } else {
-      // If an operator is selected, update the second operand
       secondOperand += element.textContent;
     }
     updateScreen();
@@ -24,7 +22,6 @@ numberButtons.forEach(element => {
 
 operatorButtons.forEach(element => {
   element.addEventListener('click', function () {
-    // Set the selected operator
     selectedOperator = element.textContent;
     updateScreen();
   });
@@ -45,10 +42,9 @@ function updateScreen() {
   screen.textContent = firstOperand + (selectedOperator ? ' ' + selectedOperator + ' ' + secondOperand : '');
 }
 
+// Calculate and display result on the screen
 equalBtn.addEventListener('click', function () {
-  // Perform the calculation based on the selected operator
   const result = calculate();
-  // Display the result on the screen
   screen.textContent = result;
 });
 
@@ -59,7 +55,12 @@ function calculate() {
   switch (selectedOperator) {
     case '+':
       return num1 + num2;
-    // Add more cases for other operators if needed
+    case '-':
+      return num1 - num2;
+    case '*':
+      return num1 * num2;
+    case '/':
+      return num1 / num2;
     default:
       return NaN; // Invalid operator
   }
