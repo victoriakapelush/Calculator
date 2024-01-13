@@ -1,36 +1,66 @@
 const screen = document.getElementById("screen");
-let number = document.querySelectorAll('.number');
-const clear_btn = document.getElementsByClassName("AC")[0];
-const equal = document.getElementsByClassName("equal")[0];
-const operator = document.querySelectorAll(".operator")
+const numberButtons = document.querySelectorAll('.number');
+const clearBtn = document.getElementsByClassName("AC")[0];
+const equalBtn = document.getElementsByClassName("equal")[0];
+const operatorButtons = document.querySelectorAll(".operator");
 
-number.forEach( element => {
-  element.addEventListener('click', display);
- })
+let firstOperand = '';
+let secondOperand = '';
+let selectedOperator = null;
 
-operator.forEach( element => {
-  element.addEventListener('click', display);
-})
+// Display numbers and operators on the screen
+numberButtons.forEach(element => {
+  element.addEventListener('click', function () {
+    if (selectedOperator === null) {
+      // If no operator is selected, update the first operand
+      firstOperand += element.textContent;
+    } else {
+      // If an operator is selected, update the second operand
+      secondOperand += element.textContent;
+    }
+    updateScreen();
+  });
+});
 
-function display(e) {
-  const value = e.target.value;
-      screen.textContent += value; 
- }
+operatorButtons.forEach(element => {
+  element.addEventListener('click', function () {
+    // Set the selected operator
+    selectedOperator = element.textContent;
+    updateScreen();
+  });
+});
 
-clear_btn.addEventListener("click", clear);
+// Button "AC" (clear screen)
+clearBtn.addEventListener("click", clear);
 
 function clear() {
-  return screen.textContent = "";
+  firstOperand = '';
+  secondOperand = '';
+  selectedOperator = null;
+  updateScreen();
 }
+
+function updateScreen() {
+  // Update the screen with the current operands and operator
+  screen.textContent = firstOperand + (selectedOperator ? ' ' + selectedOperator + ' ' + secondOperand : '');
+}
+
+equalBtn.addEventListener('click', function () {
+  // Perform the calculation based on the selected operator
+  const result = calculate();
+  // Display the result on the screen
+  screen.textContent = result;
+});
 
 function calculate() {
-  screen.textContent = eval(screen.textContent);
-}
-
-function percent() {
-
-}
-
-function changeSign() {
-  
+  // Convert operands to numbers and perform the calculation
+  const num1 = parseFloat(firstOperand);
+  const num2 = parseFloat(secondOperand);
+  switch (selectedOperator) {
+    case '+':
+      return num1 + num2;
+    // Add more cases for other operators if needed
+    default:
+      return NaN; // Invalid operator
+  }
 }
